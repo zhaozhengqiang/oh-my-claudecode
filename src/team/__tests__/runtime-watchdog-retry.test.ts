@@ -122,7 +122,7 @@ function initTask(cwd: string, teamName: string): string {
   return root;
 }
 
-const DEFAULT_WATCHDOG_WAIT_TIMEOUT_MS = 8000;
+const DEFAULT_WATCHDOG_WAIT_TIMEOUT_MS = 3000;
 const WATCHDOG_WAIT_INTERVAL_MS = 20;
 
 async function waitFor(
@@ -142,6 +142,7 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
   let warnSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
+    vi.useRealTimers();
     cwd = mkdtempSync(join(tmpdir(), 'runtime-watchdog-retry-'));
     tmuxMocks.isWorkerAlive.mockReset();
     tmuxMocks.spawnWorkerInPane.mockReset();
@@ -153,6 +154,7 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     warnSpy.mockRestore();
     rmSync(cwd, { recursive: true, force: true });
   });
@@ -162,9 +164,11 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
     const root = initTask(cwd, teamName);
     const runtime = makeRuntime(cwd, teamName);
     const stop = watchdogCliWorkers(runtime, 20);
-
-    await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0, 2000);
-    stop();
+    try {
+      await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0, 2000);
+    } finally {
+      stop();
+    }
 
     const task = JSON.parse(readFileSync(join(root, 'tasks', '1.json'), 'utf-8')) as {
       status: string;
@@ -239,8 +243,11 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
     };
 
     const stop = watchdogCliWorkers(runtime, 20);
-    await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0);
-    stop();
+    try {
+      await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0);
+    } finally {
+      stop();
+    }
 
     // After requeue, task 1 should be pending (requeued) and task 3 stays pending.
     // nextPendingTaskIndex iterates by index, so task 1 (index 0) is picked first.
@@ -272,9 +279,11 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
     }
     const runtime = makeRuntime(cwd, teamName);
     const stop = watchdogCliWorkers(runtime, 20);
-
-    await waitFor(() => runtime.activeWorkers.size === 0);
-    stop();
+    try {
+      await waitFor(() => runtime.activeWorkers.size === 0);
+    } finally {
+      stop();
+    }
 
     const task = JSON.parse(readFileSync(join(root, 'tasks', '1.json'), 'utf-8')) as {
       status: string;
@@ -296,10 +305,12 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
 
     const stopA = watchdogCliWorkers(runtimeA, 20);
     const stopB = watchdogCliWorkers(runtimeB, 20);
-
-    await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0);
-    stopA();
-    stopB();
+    try {
+      await waitFor(() => tmuxMocks.spawnWorkerInPane.mock.calls.length > 0);
+    } finally {
+      stopA();
+      stopB();
+    }
 
     // Give the second watchdog one more tick to observe the settled state.
     await new Promise(resolve => setTimeout(resolve, 40));
@@ -335,9 +346,11 @@ describe('watchdogCliWorkers dead-pane retry behavior', () => {
 
     const runtime = makeRuntimeWithTask(cwd, teamName, '1');
     const stop = watchdogCliWorkers(runtime, 20);
-
-    await waitFor(() => runtime.activeWorkers.size === 0);
-    stop();
+    try {
+      await waitFor(() => runtime.activeWorkers.size === 0);
+    } finally {
+      stop();
+    }
 
     const task = JSON.parse(readFileSync(join(root, 'tasks', '1.json'), 'utf-8')) as {
       status: string;
