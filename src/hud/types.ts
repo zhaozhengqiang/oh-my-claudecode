@@ -312,6 +312,9 @@ export interface HudRenderContext {
 
   /** API key source: 'project', 'global', or 'env' */
   apiKeySource: ApiKeySource | null;
+
+  /** Active profile name (derived from CLAUDE_CONFIG_DIR), null if default */
+  profileName: string | null;
 }
 
 // ============================================================================
@@ -381,6 +384,7 @@ export interface HudElementConfig {
   thinking: boolean;          // Show extended thinking indicator
   thinkingFormat: ThinkingFormat;  // Thinking indicator format
   apiKeySource: boolean;       // Show API key source (project/global/env)
+  profile: boolean;            // Show active profile name (from CLAUDE_CONFIG_DIR)
   promptTime: boolean;        // Show last prompt submission time (HH:MM:SS)
   sessionHealth: boolean;     // Show session health/duration
   showSessionDuration?: boolean;  // Show session:19m duration display (default: true if sessionHealth is true)
@@ -449,6 +453,7 @@ export const DEFAULT_HUD_CONFIG: HudConfig = {
     thinking: true,
     thinkingFormat: 'text',   // Text format for backward compatibility
     apiKeySource: false, // Disabled by default
+    profile: true,  // Show profile name when CLAUDE_CONFIG_DIR is set
     promptTime: true,  // Show last prompt time by default
     sessionHealth: true,
     useBars: false,  // Disabled by default for backwards compatibility
@@ -494,6 +499,7 @@ export const PRESET_CONFIGS: Record<HudPreset, Partial<HudElementConfig>> = {
     thinking: false,
     thinkingFormat: 'text',
     apiKeySource: false,
+    profile: true,
     promptTime: false,
     sessionHealth: false,
     useBars: false,
@@ -525,6 +531,7 @@ export const PRESET_CONFIGS: Record<HudPreset, Partial<HudElementConfig>> = {
     thinking: true,
     thinkingFormat: 'text',
     apiKeySource: false,
+    profile: true,
     promptTime: true,
     sessionHealth: true,
     useBars: true,
@@ -556,6 +563,7 @@ export const PRESET_CONFIGS: Record<HudPreset, Partial<HudElementConfig>> = {
     thinking: true,
     thinkingFormat: 'text',
     apiKeySource: true,
+    profile: true,
     promptTime: true,
     sessionHealth: true,
     useBars: true,
@@ -587,6 +595,7 @@ export const PRESET_CONFIGS: Record<HudPreset, Partial<HudElementConfig>> = {
     thinking: true,
     thinkingFormat: 'text',
     apiKeySource: false,
+    profile: true,
     promptTime: true,
     sessionHealth: true,
     useBars: false,
@@ -618,6 +627,7 @@ export const PRESET_CONFIGS: Record<HudPreset, Partial<HudElementConfig>> = {
     thinking: true,
     thinkingFormat: 'text',
     apiKeySource: true,
+    profile: true,
     promptTime: true,
     sessionHealth: true,
     useBars: true,
