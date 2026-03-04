@@ -1,3 +1,18 @@
+# oh-my-claudecode v4.6.3: CLI import.meta.url Fix
+
+## Release Notes
+
+Critical hotfix for CLI runtime error caused by `import.meta.url` being undefined in CJS bundle.
+
+### Bug Fixes
+
+- **CLI Runtime Fix**: Fixed `fileURLToPath` error by injecting `import.meta.url` polyfill in CJS build.
+  - Added banner injection in `scripts/build-cli.mjs` to define `importMetaUrl` before bundle
+  - Used esbuild `define` to replace `import.meta.url` with the polyfill
+  - Fixes `TypeError [ERR_INVALID_ARG_TYPE]: The "path" argument must be of type string` when running `omc` CLI
+
+---
+
 # oh-my-claudecode v4.6.2: CLI Shebang Hotfix
 
 ## Release Notes

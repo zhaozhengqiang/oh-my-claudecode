@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const importMetaUrl = require("url").pathToFileURL(__filename);
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -4338,8 +4339,8 @@ function getBridgeScriptPath() {
   }
   let moduleDir;
   try {
-    if (import_meta3.url) {
-      const __filename5 = (0, import_url5.fileURLToPath)(import_meta3.url);
+    if (importMetaUrl) {
+      const __filename5 = (0, import_url5.fileURLToPath)(importMetaUrl);
       moduleDir = path5.dirname(__filename5);
     } else {
       throw new Error("import.meta.url is empty");
@@ -4702,7 +4703,7 @@ async function removeFileIfExists(filePath) {
 function sleep2(ms) {
   return new Promise((resolve9) => setTimeout(resolve9, ms));
 }
-var import_child_process7, fs5, fsPromises2, path5, import_url5, import_child_process8, import_util6, import_meta3, execFileAsync3, BRIDGE_SPAWN_TIMEOUT_MS, DEFAULT_GRACE_PERIOD_MS, SIGTERM_GRACE_MS, USE_TCP_FALLBACK;
+var import_child_process7, fs5, fsPromises2, path5, import_url5, import_child_process8, import_util6, execFileAsync3, BRIDGE_SPAWN_TIMEOUT_MS, DEFAULT_GRACE_PERIOD_MS, SIGTERM_GRACE_MS, USE_TCP_FALLBACK;
 var init_bridge_manager = __esm({
   "src/tools/python-repl/bridge-manager.ts"() {
     "use strict";
@@ -4716,7 +4717,6 @@ var init_bridge_manager = __esm({
     init_paths2();
     init_atomic_write();
     init_platform();
-    import_meta3 = {};
     execFileAsync3 = (0, import_util6.promisify)(import_child_process8.execFile);
     BRIDGE_SPAWN_TIMEOUT_MS = 3e4;
     DEFAULT_GRACE_PERIOD_MS = 5e3;
@@ -5986,8 +5986,8 @@ var init_session_replay = __esm({
 // src/installer/hooks.ts
 function getPackageDir2() {
   try {
-    if (import_meta4?.url) {
-      const __filename5 = (0, import_url6.fileURLToPath)(import_meta4.url);
+    if (importMetaUrl) {
+      const __filename5 = (0, import_url6.fileURLToPath)(importMetaUrl);
       const __dirname4 = (0, import_path33.dirname)(__filename5);
       return (0, import_path33.join)(__dirname4, "..", "..");
     }
@@ -6008,7 +6008,7 @@ function loadTemplate(filename) {
 function isWindows() {
   return process.platform === "win32";
 }
-var import_path33, import_fs25, import_url6, import_meta4, MIN_NODE_VERSION, ULTRAWORK_MESSAGE, ULTRATHINK_MESSAGE, SEARCH_MESSAGE, ANALYZE_MESSAGE, RALPH_MESSAGE, PROMPT_TRANSLATION_MESSAGE, KEYWORD_DETECTOR_SCRIPT_NODE, STOP_CONTINUATION_SCRIPT_NODE, PERSISTENT_MODE_SCRIPT_NODE, CODE_SIMPLIFIER_SCRIPT_NODE, SESSION_START_SCRIPT_NODE, POST_TOOL_USE_SCRIPT_NODE, HOOKS_SETTINGS_CONFIG_NODE;
+var import_path33, import_fs25, import_url6, MIN_NODE_VERSION, ULTRAWORK_MESSAGE, ULTRATHINK_MESSAGE, SEARCH_MESSAGE, ANALYZE_MESSAGE, RALPH_MESSAGE, PROMPT_TRANSLATION_MESSAGE, KEYWORD_DETECTOR_SCRIPT_NODE, STOP_CONTINUATION_SCRIPT_NODE, PERSISTENT_MODE_SCRIPT_NODE, CODE_SIMPLIFIER_SCRIPT_NODE, SESSION_START_SCRIPT_NODE, POST_TOOL_USE_SCRIPT_NODE, HOOKS_SETTINGS_CONFIG_NODE;
 var init_hooks = __esm({
   "src/installer/hooks.ts"() {
     "use strict";
@@ -6016,7 +6016,6 @@ var init_hooks = __esm({
     import_fs25 = require("fs");
     import_url6 = require("url");
     init_config_dir();
-    import_meta4 = {};
     MIN_NODE_VERSION = 20;
     ULTRAWORK_MESSAGE = `<ultrawork-mode>
 
@@ -6265,7 +6264,7 @@ Respond to the user in their original language.
 // src/lib/version.ts
 function getRuntimePackageVersion() {
   try {
-    const __filename5 = (0, import_url7.fileURLToPath)(import_meta5.url);
+    const __filename5 = (0, import_url7.fileURLToPath)(importMetaUrl);
     const __dirname4 = (0, import_path34.dirname)(__filename5);
     for (let i = 0; i < 5; i++) {
       const candidate = (0, import_path34.join)(__dirname4, ...Array(i + 1).fill(".."), "package.json");
@@ -6282,14 +6281,13 @@ function getRuntimePackageVersion() {
   }
   return "unknown";
 }
-var import_fs26, import_path34, import_url7, import_meta5;
+var import_fs26, import_path34, import_url7;
 var init_version = __esm({
   "src/lib/version.ts"() {
     "use strict";
     import_fs26 = require("fs");
     import_path34 = require("path");
     import_url7 = require("url");
-    import_meta5 = {};
   }
 });
 
@@ -6453,8 +6451,8 @@ function isProjectScopedPlugin() {
 }
 function getPackageDir3() {
   try {
-    if (import_meta6?.url) {
-      const __filename5 = (0, import_url8.fileURLToPath)(import_meta6.url);
+    if (importMetaUrl) {
+      const __filename5 = (0, import_url8.fileURLToPath)(importMetaUrl);
       const __dirname4 = (0, import_path36.dirname)(__filename5);
       return (0, import_path36.join)(__dirname4, "..", "..");
     }
@@ -6899,7 +6897,7 @@ function getInstallInfo() {
     return null;
   }
 }
-var import_fs28, import_path36, import_url8, import_os8, import_child_process11, import_meta6, CLAUDE_CONFIG_DIR, AGENTS_DIR, COMMANDS_DIR, SKILLS_DIR, HOOKS_DIR, HUD_DIR, SETTINGS_FILE, VERSION_FILE, CORE_COMMANDS, VERSION, OMC_HOOK_FILENAMES;
+var import_fs28, import_path36, import_url8, import_os8, import_child_process11, CLAUDE_CONFIG_DIR, AGENTS_DIR, COMMANDS_DIR, SKILLS_DIR, HOOKS_DIR, HUD_DIR, SETTINGS_FILE, VERSION_FILE, CORE_COMMANDS, VERSION, OMC_HOOK_FILENAMES;
 var init_installer = __esm({
   "src/installer/index.ts"() {
     "use strict";
@@ -6912,7 +6910,6 @@ var init_installer = __esm({
     init_version();
     init_config_dir();
     init_resolve_node();
-    import_meta6 = {};
     CLAUDE_CONFIG_DIR = getConfigDir();
     AGENTS_DIR = (0, import_path36.join)(CLAUDE_CONFIG_DIR, "agents");
     COMMANDS_DIR = (0, import_path36.join)(CLAUDE_CONFIG_DIR, "commands");
@@ -16984,7 +16981,7 @@ function processSlackSocketMessage(rawMessage, connectionState, paneId, config2,
   }
   return { injected: success, validation };
 }
-var import_fs49, import_path56, import_url10, import_os11, import_child_process16, import_https2, import_meta8, __filename2, SECURE_FILE_MODE2, MAX_LOG_SIZE_BYTES, DAEMON_ENV_ALLOWLIST, DEFAULT_STATE_DIR, PID_FILE_PATH, STATE_FILE_PATH, LOG_FILE_PATH, RateLimiter, discordBackoffUntil, PRUNE_INTERVAL_MS;
+var import_fs49, import_path56, import_url10, import_os11, import_child_process16, import_https2, __filename2, SECURE_FILE_MODE2, MAX_LOG_SIZE_BYTES, DAEMON_ENV_ALLOWLIST, DEFAULT_STATE_DIR, PID_FILE_PATH, STATE_FILE_PATH, LOG_FILE_PATH, RateLimiter, discordBackoffUntil, PRUNE_INTERVAL_MS;
 var init_reply_listener = __esm({
   "src/notifications/reply-listener.ts"() {
     "use strict";
@@ -17000,8 +16997,7 @@ var init_reply_listener = __esm({
     init_redact();
     init_slack_socket();
     init_slack_socket();
-    import_meta8 = {};
-    __filename2 = (0, import_url10.fileURLToPath)(import_meta8.url);
+    __filename2 = (0, import_url10.fileURLToPath)(importMetaUrl);
     SECURE_FILE_MODE2 = 384;
     MAX_LOG_SIZE_BYTES = 1 * 1024 * 1024;
     DAEMON_ENV_ALLOWLIST = [
@@ -22343,11 +22339,10 @@ init_loader();
 var import_fs3 = require("fs");
 var import_path3 = require("path");
 var import_url = require("url");
-var import_meta = {};
 function getPackageDir() {
   try {
-    if (import_meta?.url) {
-      const __filename5 = (0, import_url.fileURLToPath)(import_meta.url);
+    if (importMetaUrl) {
+      const __filename5 = (0, import_url.fileURLToPath)(importMetaUrl);
       const __dirname4 = (0, import_path3.dirname)(__filename5);
       return (0, import_path3.join)(__dirname4, "..", "..");
     }
@@ -48334,7 +48329,6 @@ var lspTools = [
 var import_fs10 = require("fs");
 var import_path14 = require("path");
 var import_module = require("module");
-var import_meta2 = {};
 var sgModule = null;
 var sgLoadFailed = false;
 var sgLoadError = "";
@@ -48344,7 +48338,7 @@ async function getSgModule() {
   }
   if (!sgModule) {
     try {
-      const require2 = (0, import_module.createRequire)(import_meta2.url || __filename || process.cwd() + "/");
+      const require2 = (0, import_module.createRequire)(importMetaUrl || __filename || process.cwd() + "/");
       sgModule = require2("@ast-grep/napi");
     } catch {
       try {
@@ -55148,11 +55142,10 @@ init_session_replay();
 var import_fs42 = require("fs");
 var import_path46 = require("path");
 var import_url9 = require("url");
-var import_meta7 = {};
 function getPackageDir4() {
   try {
-    if (import_meta7?.url) {
-      const __filename5 = (0, import_url9.fileURLToPath)(import_meta7.url);
+    if (importMetaUrl) {
+      const __filename5 = (0, import_url9.fileURLToPath)(importMetaUrl);
       const __dirname4 = (0, import_path46.dirname)(__filename5);
       return (0, import_path46.join)(__dirname4, "..", "..");
     }
@@ -55193,7 +55186,6 @@ ${content}
 }
 
 // src/hooks/bridge.ts
-var import_meta9 = {};
 var PKILL_F_FLAG_PATTERN = /\bpkill\b.*\s-f\b/;
 var PKILL_FULL_FLAG_PATTERN = /\bpkill\b.*--full\b/;
 var TEAM_TERMINAL_VALUES = /* @__PURE__ */ new Set([
@@ -56140,7 +56132,7 @@ async function main() {
   const output = await processHook(hookType, input);
   console.log(JSON.stringify(output));
 }
-if (import_meta9.url === (0, import_url11.pathToFileURL)(process.argv[1]).href) {
+if (importMetaUrl === (0, import_url11.pathToFileURL)(process.argv[1]).href) {
   main().catch((err) => {
     console.error("[hook-bridge] Fatal error:", err);
     process.exit(1);
@@ -56561,8 +56553,7 @@ init_context_injector();
 var import_fs69 = require("fs");
 var import_path78 = require("path");
 var import_url12 = require("url");
-var import_meta10 = {};
-var __filename3 = (0, import_url12.fileURLToPath)(import_meta10.url);
+var __filename3 = (0, import_url12.fileURLToPath)(importMetaUrl);
 var __dirname2 = (0, import_path78.dirname)(__filename3);
 var PROJECT_ROOT = (0, import_path78.join)(__dirname2, "..", "..", "..");
 var SKILLS_DIR2 = (0, import_path78.join)(PROJECT_ROOT, "skills");
@@ -56894,8 +56885,7 @@ var import_url13 = require("url");
 var import_os20 = require("os");
 var import_child_process22 = require("child_process");
 init_tmux_detector();
-var import_meta11 = {};
-var __filename4 = (0, import_url13.fileURLToPath)(import_meta11.url);
+var __filename4 = (0, import_url13.fileURLToPath)(importMetaUrl);
 var DEFAULT_CONFIG5 = {
   pollIntervalMs: 60 * 1e3,
   // 1 minute
@@ -59371,8 +59361,7 @@ function warnIfWin32() {
 }
 
 // src/cli/index.ts
-var import_meta12 = {};
-var __dirname3 = (0, import_path92.dirname)((0, import_url14.fileURLToPath)(import_meta12.url));
+var __dirname3 = (0, import_path92.dirname)((0, import_url14.fileURLToPath)(importMetaUrl));
 var version2 = getRuntimePackageVersion();
 var program2 = new Command();
 warnIfWin32();
