@@ -427,6 +427,11 @@ export interface HookOutput {
   modifiedInput?: unknown;
 }
 
+function isDelegationToolName(toolName: string | undefined): boolean {
+  const normalizedToolName = (toolName || "").toLowerCase();
+  return normalizedToolName === "task" || normalizedToolName === "agent";
+}
+
 /**
  * Hook types that can be processed
  */
@@ -1247,7 +1252,7 @@ function processPreToolUse(input: HookInput): HookOutput {
   // silently strip the model. Instead, deny the call so Claude retries without
   // the model param, letting agents inherit the parent session's model.
   // (issues #1135, #1201, #1415)
-  if (input.toolName === "Task" || input.toolName === "Agent") {
+  if (isDelegationToolName(input.toolName)) {
     const originalInput = input.toolInput as
       | Record<string, unknown>
       | undefined;
@@ -1636,9 +1641,12 @@ async function processPostToolUse(input: HookInput): Promise<HookOutput> {
   if (orchestratorResult.message) {
     messages.push(orchestratorResult.message);
   }
+  if (orchestratorResult.modifiedOutput) {
+    messages.push(orchestratorResult.modifiedOutput);
+  }
 
   // After Task completion, show updated agent dashboard
-  if (input.toolName === "Task") {
+  if (isDelegationToolName(input.toolName)) {
     const dashboard = getAgentDashboard(directory);
     if (dashboard) {
       messages.push(dashboard);
